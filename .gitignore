@@ -1,2 +1,58 @@
 .ddev
 .vscode
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+*.swo
+
+# Environment overrides
+.env
+.env.local
+.env.*.local
+
+# Dependencies (optional in team workflows; keep ignored if installed locally)
+node_modules/
+
+# Build and frontend artifacts
+**/dist/
+**/build/
+**/.cache/
+**/.sass-cache/
+**/.eslintcache
+
+# Runtime cache and logs
+var/cache/
+var/log/
+cache/cachefs/
+cache/purifier/
+cache/push/
+cache/sandbox/
+cache/smarty/cache/
+cache/smarty/compile/
+
+# Legacy cache/temp folders
+app/cache/
+
+# Sessions and local uploads generated at runtime
+img/tmp/
+upload/*
+!upload/index.php
+download/*
+!download/index.php
+
+# Temporary backups/dumps
+*.log
+*.tmp
+*.temp
+*.bak
+*.sql
+*.sql.gz
+
+# Test and quality reports
+phpunit.xml
+phpunit.xml.dist.local
+.phpunit.result.cache
+coverage/
