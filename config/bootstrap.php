@@ -84,6 +84,8 @@ if ($lastParametersModificationTime) {
         }
     }
 
+    var_dump('EL CACHE DE LA DISCORDIA ' . _PS_CACHE_DIR_);
+
     $config = require_once _PS_CACHE_DIR_ . 'appParameters.php';
     array_walk($config['parameters'], function (&$param) {
         $param = str_replace('%%', '%', $param ?? '');
