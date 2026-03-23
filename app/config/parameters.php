@@ -1,11 +1,11 @@
 <?php return array (
   'parameters' => 
   array (
-    'database_host' => 'db',
-    'database_port' => '',
-    'database_name' => 'db',
-    'database_user' => 'db',
-    'database_password' => 'db',
+    'database_host' => getenv('DB_SERVER'),
+    'database_port' => getenv('DB_PORT') ?: 3306,
+    'database_name' => getenv('DB_NAME') ?: 'db',
+    'database_user' => getenv('DB_USER') ?: 'db',
+    'database_password' => getenv('DB_PASSWORD') ?: 'db',
     'database_prefix' => 'ps_',
     'database_engine' => 'InnoDB',
     'mailer_transport' => 'smtp',
