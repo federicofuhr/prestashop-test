@@ -1,8 +1,8 @@
 <?php return array (
   'parameters' => 
   array (
-    'database_host' => getenv('DB_SERVER'),
-    'database_port' => getenv('DB_PORT') ?: 3306,
+    'database_host' => getenv('DB_SERVER') ?: 'db',
+    'database_port' => getenv('DB_PORT'),
     'database_name' => getenv('DB_NAME') ?: 'db',
     'database_user' => getenv('DB_USER') ?: 'db',
     'database_password' => getenv('DB_PASSWORD') ?: 'db',
