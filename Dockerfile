@@ -1,44 +1,20 @@
-FROM php:8.1-apache
+# Usamos la imagen oficial que ya tiene Apache y PHP 8.1 configurados
+FROM prestashop/prestashop:8.2-php8.1-apache
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html
+# 1. Copiamos TU código de GitHub a la ruta estándar de PrestaShop
+# Esto sobreescribe los archivos base con tus cambios del repo
+COPY . /var/www/html/
 
-RUN set -eux; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        libxml2-dev \
-        libxslt1-dev \
-        libzip-dev \
-        unzip \
-        zip; \
-    docker-php-ext-configure gd --with-freetype --with-jpeg; \
-    docker-php-ext-install -j"$(nproc)" \
-        bcmath \
-        exif \
-        gd \
-        intl \
-        mysqli \
-        opcache \
-        pdo_mysql \
-        soap \
-        xsl \
-        zip; \
-    a2enmod headers expires rewrite; \
-    rm -rf /var/lib/apt/lists/*
+# 2. Corregimos permisos (Vital para que no falle la caché en /var/www/html/var/cache)
+# El usuario 'www-data' es el que usa Apache internamente
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 775 /var/www/html/var/cache /var/www/html/var/logs /var/www/html/img
 
-COPY . /var/www/html
+# 3. Limpiamos la caché del build para que no arrastre rutas locales tuyas
+RUN rm -rf /var/www/html/var/cache/*
 
-RUN set -eux; \
-    mkdir -p /var/www/html/var/cache /var/www/html/var/log; \
-    rm -rf /var/www/html/var/cache/*; \
-    find /var/www/html -type d -exec chmod 755 {} \;; \
-    find /var/www/html -type f -exec chmod 644 {} \;; \
-    chown -R www-data:www-data /var/www/html/var /var/www/html/cache /var/www/html/img /var/www/html/download /var/www/html/upload
+# 4. Ajustes de PHP necesarios para PrestaShop (opcional pero recomendado)
+RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/custom.ini && \
+    echo "max_execution_time = 300" >> /usr/local/etc/php/conf.d/custom.ini
 
 WORKDIR /var/www/html
-EXPOSE 80
-
-CMD ["apache2-foreground"]
