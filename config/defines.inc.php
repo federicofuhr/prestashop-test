@@ -64,6 +64,8 @@ if (!defined('_PS_DO_NOT_LOAD_CONFIGURATION_')) {
 
 $currentDir = dirname(__FILE__);
 
+var_dump($currentDir);
+
 if (!defined('_PS_ROOT_DIR_') && (getenv('_PS_ROOT_DIR_') || getenv('REDIRECT__PS_ROOT_DIR_'))) {
     define('_PS_ROOT_DIR_', getenv('_PS_ROOT_DIR_') ? getenv('_PS_ROOT_DIR_') : getenv('REDIRECT__PS_ROOT_DIR_'));
 }
